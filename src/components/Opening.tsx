@@ -1,6 +1,6 @@
-import { Box, Stack, Heading, Text, Divider, Flex, HStack, IconButton, Image } from "@chakra-ui/react";
+import { Box, Stack, Heading, Text, Divider, Flex, HStack, IconButton, Image, SlideFade } from "@chakra-ui/react";
 import font from "../font/Butler_Light-0737d51bdc90202fe832aaed043a2798.otf";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IMAGE_CAROUSEL } from "../constant/ImageCarousel"; 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
@@ -9,9 +9,26 @@ interface IOpening {
 }
 
 export const Opening : React.FC<IOpening> = ({isOpen}) => {
+    const ref = useRef<HTMLDivElement | null>(null);
+    const [isInView, setIsInView] = useState(false);
     const [activeCarousel, setIsActiveCarousel] = useState<number>(1);
 
-    console.log("open", isOpen)
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => setIsInView(entry.isIntersecting),
+        { threshold: 0.25 }
+      );
+  
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+  
+      return () => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      };
+    }, [isOpen]);
 
     const handlePrev = () => {
         setIsActiveCarousel((prevIndex) =>
@@ -30,8 +47,8 @@ export const Opening : React.FC<IOpening> = ({isOpen}) => {
         <Stack
           alignSelf={"center"}
           position={"relative"}
-          height={"100vh"}
           overflowX={"hidden"}
+          ref={ref}
         >
           <Stack
             gap={"10vh"}
@@ -49,10 +66,12 @@ export const Opening : React.FC<IOpening> = ({isOpen}) => {
               <Text fontFamily={"Poppins"} fontWeight={"bold"}>Family & Friends</Text>
             </Box>
             <Stack gap={10}>
-              <Heading size={"xl"} fontFamily={font} fontWeight={"medium"} whiteSpace={"pre-line"}>
+            <SlideFade in={isInView} offsetY='20px' transition={{ enter: { duration: 0.3, ease: "easeInOut" } }}>
+              <Heading size={"xl"} fontFamily={font} fontWeight={"medium"}>
                 {"Welcome to \n Tiffany & Jared's \n Wedding Website"}
               </Heading>
               <Text>Together with joyful hearts and the grace of God, we joyfully announce the upcoming of our marriage.</Text>
+            </SlideFade>
             </Stack>
           </Stack>
           <Stack>

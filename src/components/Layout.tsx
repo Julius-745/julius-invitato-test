@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Stack, Text, SlideFade } from "@chakra-ui/react";
 import React from "react";
 import font from "../font/Butler_Light-0737d51bdc90202fe832aaed043a2798.otf";
 import { UseIsMobileScreen } from "../hooks/useMobileScreen";
@@ -18,7 +18,7 @@ const Layout: React.FC<ILayout> = (props) => {
         top={0}
         overflow={"hidden"} 
         borderRight={"5px solid #6d6d6d"}
-        height={"100vh"} // Ensures the first GridItem doesn't get bigger
+        height={"100vh"}
       >
         <Box 
           backgroundImage={"https://ik.imagekit.io/drpq5xrph/Template%20Tiffany%20&%20Jared/Desktop.jpg?updatedAt=1698223781539"} 
@@ -41,6 +41,7 @@ const Layout: React.FC<ILayout> = (props) => {
           left={0} 
           zIndex={1}
         />
+        
         <Stack 
           gap={10} 
           p={"42px"} 
@@ -48,10 +49,13 @@ const Layout: React.FC<ILayout> = (props) => {
           zIndex={2} 
           color={"white"}
         >
-          <Heading fontSize={"xl"}>Wedding Announcement</Heading>
+          <SlideFade in offsetY='20px' transition={{ enter: { duration: 0.5, ease: "easeInOut" } }}>
+            <Heading fontSize={"xl"}>Wedding Announcement</Heading>
+          </SlideFade>
           <Heading size={"4xl"} fontFamily={font} fontWeight={"light"} maxW={"20rem"}>
             Tiffany & Jared
           </Heading>
+          <SlideFade in offsetY='20px' transition={{ enter: { duration: 0.5, ease: "easeInOut" } }}>
           <Box>
             <Text fontWeight={"light"} fontStyle={"italic"} maxW={"40rem"}>
               "Aku ingin mencintaimu dengan sederhana; dengan kata yang tak sempat diucapkan kayu kepada api yang menjadikannya abu. Aku ingin mencintaimu dengan sederhana; dengan isyarat yang tak sempat disampaikan awan kepada hujan yang menjadikannya tiada."
@@ -60,7 +64,9 @@ const Layout: React.FC<ILayout> = (props) => {
               - Sapardi Djoko Damono
             </Text>
           </Box>
+          </SlideFade>
         </Stack>
+        
       </GridItem>
       )  
     }
