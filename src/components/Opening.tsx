@@ -3,6 +3,7 @@ import font from "../font/Butler_Light-0737d51bdc90202fe832aaed043a2798.otf";
 import { useEffect, useRef, useState } from "react";
 import { IMAGE_CAROUSEL } from "../constant/ImageCarousel"; 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { UseIsMobileScreen } from "../hooks";
 
 interface IOpening {
   isOpen: boolean;
@@ -12,6 +13,7 @@ export const Opening : React.FC<IOpening> = ({isOpen}) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const [isInView, setIsInView] = useState(false);
     const [activeCarousel, setIsActiveCarousel] = useState<number>(1);
+    const IsMobileScreen = UseIsMobileScreen();
 
     useEffect(() => {
       const observer = new IntersectionObserver(
@@ -53,7 +55,7 @@ export const Opening : React.FC<IOpening> = ({isOpen}) => {
           <Stack
             gap={"10vh"}
             px={"10vh"}
-            mt={"20vh"}
+            mt={"5vh"}
             position="relative"
             zIndex={1}
             color={"white"}
@@ -79,7 +81,7 @@ export const Opening : React.FC<IOpening> = ({isOpen}) => {
                 align="center"
                 justify="center"
                 position="relative"
-                my={{ base: "30vh", lg: "18rem" }}
+                my={IsMobileScreen ? "40vh" : "25vh" }
               >
                 <IconButton
                   icon={<ChevronLeftIcon color={"black"}/>}
